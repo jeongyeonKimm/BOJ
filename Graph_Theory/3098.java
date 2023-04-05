@@ -1,12 +1,10 @@
-package GraphTheory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class GT3098 {
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -17,7 +15,7 @@ public class GT3098 {
         int[][] map = new int[n + 1][n + 1];
 
         int val = 1;
-        int total = 0;
+        int total = 0;  // 전체 친구 관계 수
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
@@ -34,11 +32,11 @@ public class GT3098 {
             int before = total;
             val++;
             for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    if (map[i][j] > 0 && map[i][j] < val && i != j) {
-                        for (int k = 1; k <= n; k++) {
-                            if (map[j][k] > 0 && map[j][k] < val && i != k) {
-                                if (map[i][k] == 0) {
+                for (int j = 1; j <= n; j++) {  
+                    if (map[i][j] > 0 && map[i][j] < val && i != j) {   // i와 j가 친구 관계인 경우
+                        for (int k = 1; k <= n; k++) {  // j의 친구를 찾기 위한 반복문
+                            if (map[j][k] > 0 && map[j][k] < val && i != k) {   // j와 k가 친구인 경우
+                                if (map[i][k] == 0) {   // j의 친구인 k가 i의 친구가 아니면 친구 관계 만들어주고 전체 친구 관계 수 증가 
                                     map[i][k] = val;
                                     map[k][i] = val;
                                     total++;
@@ -48,9 +46,9 @@ public class GT3098 {
                     }
                 }
             }
-            int dayTotal = total - before;
+            int dayTotal = total - before;  // 하루에 생성된 친구 관계 수
             arr.add(dayTotal);
-            if (total == n * (n - 1) / 2) {
+            if (total == n * (n - 1) / 2) { // 모든 사람들이 친구 관계가 된 경우
                 break;
             }
         }
