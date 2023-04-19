@@ -55,7 +55,7 @@ public class Main {
          * 
          * makePrime(n);
          *
-         * for (int i = 0; i < prime.length; i++) {
+         * for (int i = m; i <= n; i++) {
          *     if (prime[i] == false) {
          *         System.out.println(i);
          *     }
