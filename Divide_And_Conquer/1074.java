@@ -4,6 +4,25 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+    static int result = 0;
+
+    public static void find(int size, int r, int c) {
+        if (size == 1) return;
+
+        if (r < size / 2 && c < size / 2) {
+            find(size / 2, r, c);
+        } else if (r < size / 2 && c >= size / 2) {
+            result += (size / 2) * (size / 2);
+            find(size / 2, r, c - size / 2);
+        } else if (r >= size / 2 && c < size / 2) {
+            result += (size / 2) * (size / 2) * 2;
+            find(size / 2, r - size / 2, c);
+        } else {
+            result += (size / 2) * (size / 2) * 3;
+            find(size / 2, r - size / 2, c - size / 2);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -12,33 +31,7 @@ public class Main {
         int r = Integer.parseInt(st.nextToken());
         int c = Integer.parseInt(st.nextToken());
 
-        double result = 0;
-        for (int i = n - 1; i >= 0; i--) {
-            boolean flagR = false;
-            boolean flagC = false;
-
-            if (r < Math.pow(2, i)) {
-                flagR = true;
-            } else {
-                r = (int) (r - Math.pow(2, i));
-            }
-            if (c < Math.pow(2, i)) {
-                flagC = true;
-            } else {
-                c = (int) (c - Math.pow(2, i));
-            }
-
-            if (flagR && flagC) {
-                result += (0 * Math.pow(2, i) * Math.pow(2, i));
-            } else if (flagR && !flagC) {
-                result += (1 * Math.pow(2, i) * Math.pow(2, i));
-            } else if (!flagR && flagC) {
-                result += (2 * Math.pow(2, i) * Math.pow(2, i));
-            } else {
-                result += (3 * Math.pow(2, i) * Math.pow(2, i));
-            }
-        }
-
-        System.out.println((int) result);
+        find((int) Math.pow(2, n), r, c);
+        System.out.println(result);
     }
 }
